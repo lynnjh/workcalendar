@@ -57,8 +57,9 @@ if "cal_month" not in st.session_state:
 
 # --- 3. 사이드바: 사용자 인증 및 업무 입력 ---
 with st.sidebar:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/GS25_logo.svg/512px-GS25_logo.svg.png", width=150)
-    st.title("상생협력팀 업무관리")
+    # 이미지 로딩 오류 방지를 위해 로고 제거 및 텍스트 대체 (선택 사항)
+    st.title("GS25 상생협력팀")
+    st.subheader("업무관리 대시보드")
     
     # 사용자 이름 입력 (누구나 본인 이름으로 작성 가능)
     user_name = st.text_input("👤 본인 이름을 적어주세요", placeholder="이름을 입력해야 등록 가능")
@@ -90,7 +91,7 @@ with st.sidebar:
             st.rerun()
 
     # 4. 삭제 권한 관리 (관리자 lynnjh 만 가능)
-    if user_name == "lynnhj" or user_name == "lynnjh": # 오타 대비 포함
+    if user_name == "lynnhj" or user_name == "lynnjh":
         st.divider()
         st.subheader("🔒 관리자 메뉴 (삭제)")
         if st.session_state.tasks:
@@ -155,8 +156,7 @@ for week in month_days:
                 st.markdown(f"""<div class="calendar-box" style="{today_style}">
                                 <span style="font-size:18px; font-weight:bold;">{day}</span>""", unsafe_allow_html=True)
                 
-                # 해당 날짜 업무 필터링
-                current_date = f"{st.session_state.cal_year}-{st.session_state.current_month:02d}-{day:02d}" # 기존 변수명 호환 유지
+                # 오류가 발생했던 날짜 포맷팅 부분 수정 완료
                 current_date = f"{st.session_state.cal_year}-{st.session_state.cal_month:02d}-{day:02d}"
                 
                 day_tasks = [t for t in st.session_state.tasks if t['date'] == current_date]
